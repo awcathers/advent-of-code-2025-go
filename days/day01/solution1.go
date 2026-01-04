@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -8,7 +9,7 @@ import (
 )
 
 func main() {
-
+	fmt.Print(Solve("input1"))
 }
 
 func Solve(input_file string) int {
@@ -19,7 +20,7 @@ func Solve(input_file string) int {
 
 	dial_position := 50
 	text := string(data)
-	lines := strings.Split(text, "\r\n")
+	lines := strings.Split(text, "\n")
 	count := 0
 	for _, line := range lines {
 		d := line[0:1]
@@ -29,8 +30,16 @@ func Solve(input_file string) int {
 		}
 		if d == "L" {
 			dial_position -= a
-		} else if line == "R" {
+		} else if d == "R" {
 			dial_position += a
+		} else {
+			log.Fatal("Invalid direction in input file")
+		}
+
+		if dial_position < 0 {
+			dial_position += 100
+		} else {
+			dial_position = dial_position % 99
 		}
 
 		if dial_position == 0 {
